@@ -1,0 +1,13 @@
+node_modules/
+dist/
+*.tsbuildinfo
+target/
+.venv/
+__pycache__/
+.pytest_cache/
+.env
+*.local
+test-results/
+playwright-report/
+# Local DB password and admin login
+backend/config/

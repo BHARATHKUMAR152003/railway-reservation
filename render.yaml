@@ -1,0 +1,30 @@
+# Render Blueprint: Render dashboard > New > Blueprint > select this repository.
+# Render has no managed MySQL: create a free external MySQL (e.g. TiDB Cloud Serverless or Aiven)
+# and enter its connection values when Render prompts for the `sync: false` variables.
+services:
+  - type: web
+    name: railway-reservation-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /api/health
+    autoDeployTrigger: checksPass
+    envVars:
+      - key: PORT
+        value: "8114"
+      # e.g. jdbc:mysql://<host>:4000/railway?sslMode=VERIFY_IDENTITY&serverTimezone=UTC
+      - key: DB_URL
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      # Optional admin login seeded at start-up (password min. 10 characters).
+      - key: RAIL_ADMIN_EMAIL
+        sync: false
+      - key: RAIL_ADMIN_PASSWORD
+        sync: false
+      # Origin of the GitHub Pages frontend (scheme + host only, no path).
+      - key: CORS_ORIGINS
+        value: https://bharathkumar152003.github.io
